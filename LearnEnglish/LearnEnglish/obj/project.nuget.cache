@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TaYHJAdZqNLZk7gT9OIk1ZgEaVRWQd+7rzhuSw3YsuC3t32Xbz28ZMr2S6HOjLBuyaIyNOVAXYAYpu74aQpL4g==",
+  "dgSpecHash": "D2eZGgIY1oUrhQUu+absa0tMdL3aLcH3jPmshTCcg8aXp6kRtRF59Ea6dnw1aVvCO51Q6yDLhJyRaZStA29zzw==",
   "success": true,
-  "projectFilePath": "D:\\Test program\\C#console\\LearnEnglish\\LearnEnglish\\LearnEnglish.csproj",
+  "projectFilePath": "D:\\My code\\c-\\LearnEnglish\\LearnEnglish\\LearnEnglish.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.win32.systemevents\\4.5.0\\microsoft.win32.systemevents.4.5.0.nupkg.sha512",

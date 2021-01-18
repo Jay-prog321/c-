@@ -495,11 +495,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Test program\\C#console\\LearnEnglish\\LearnEnglish\\LearnEnglish.csproj",
+      "projectUniqueName": "D:\\My code\\c-\\LearnEnglish\\LearnEnglish\\LearnEnglish.csproj",
       "projectName": "LearnEnglish",
-      "projectPath": "D:\\Test program\\C#console\\LearnEnglish\\LearnEnglish\\LearnEnglish.csproj",
+      "projectPath": "D:\\My code\\c-\\LearnEnglish\\LearnEnglish\\LearnEnglish.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\Test program\\C#console\\LearnEnglish\\LearnEnglish\\obj\\",
+      "outputPath": "D:\\My code\\c-\\LearnEnglish\\LearnEnglish\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",

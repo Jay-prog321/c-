@@ -45,7 +45,6 @@ namespace LearnEnglish
                             Console.WriteLine(item);
                         }
                     }
-                    /*
                     IWorkbook workbook;
                     if (fname.Contains(".xls"))
                     {
@@ -79,8 +78,8 @@ namespace LearnEnglish
                     //Console.WriteLine(tempWordList.Count);
                     for (int i = 0; i < tempWordList.Count; i++)
                     {
-                        string str = tempWordList[i].Chinese;
-                        if (!str.Contains("未识别")&& !str.Contains("或者地名"))
+                        string str1 = tempWordList[i].Chinese;
+                        if (!str1.Contains("未识别") && !str1.Contains("或者地名"))
                         {
                             //Console.WriteLine(wordList[i].Chinese);
                             wordList.Add(tempWordList[i]);
@@ -91,7 +90,6 @@ namespace LearnEnglish
                     //{
                     //    Console.WriteLine("*************\n{0}\n{1}", item.English, item.Chinese);
                     //}
-                    */
                 }
 
             }
@@ -100,7 +98,6 @@ namespace LearnEnglish
             {
                 Console.WriteLine("The process failed: {0}", e.ToString());
             }
-             /*
             if (wordList.Count == 0) { Console.WriteLine("本次学习单词数量为0，请将文件放入netcoreapp3.1下");return; }
             Console.WriteLine("单词文件加载完毕");
             Console.WriteLine("************************");
@@ -209,7 +206,6 @@ namespace LearnEnglish
             }
             Console.WriteLine("按任意键退出程序");
             Console.ReadKey();
-             */
         }
         static List<Word> GetRandomWordList(int num)
         {
