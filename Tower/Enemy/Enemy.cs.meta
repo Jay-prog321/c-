@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 0ec9d5af5b09ba443a516a8bd48c1f45
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - animationConfig: {fileID: 11400000, guid: 4b3efc4bedd83114eb8c3f8a7dabea5b, type: 2}
+  - model: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
