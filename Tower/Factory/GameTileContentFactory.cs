@@ -13,30 +13,8 @@ public class GameTileContentFactory : GameObjectFactory
 	{
 		GameTileContent instance = CreateGameObjectInstance(prefab);
 		instance.OriginFactory = this;
-		//MoveToFactoryScene(instance.gameObject);
 		return instance;
 	}
-	//Scene contentScene;
-	//void MoveToFactoryScene(GameObject o)
-	//{
-	//	if (!contentScene.isLoaded)
-	//	{
-	//		if (Application.isEditor)
-	//		{
-	//			contentScene = SceneManager .GetSceneByName(name);
-				
-	//			if (!contentScene.isLoaded)
-	//			{
-	//				contentScene = SceneManager.CreateScene(name);
-	//			}
-	//		}
-	//		else
-	//		{
-	//			contentScene = SceneManager.CreateScene(name);
-	//		}
-	//	}
-	//	SceneManager.MoveGameObjectToScene(o, contentScene);
-	//}
 	[SerializeField]
 	GameTileContent destinationPrefab = default;
 	[SerializeField]

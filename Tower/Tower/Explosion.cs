@@ -29,7 +29,6 @@ public class Explosion : WarEntity
             }
         }
         transform.localPosition = postion;
-        //transform.localScale = Vector3.one*(2f * blastRadius);
         scale = 2f * blastRadius;
     }
     public override bool GameUpdate()

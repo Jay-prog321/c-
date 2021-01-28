@@ -50,11 +50,6 @@ public class GameBoard : MonoBehaviour
                 //tile.Content = contentFactory.Get(GameTileContentType.Empty);
             }
         }
-        //设置场景中心为初始Destination
-        //ToggleDestination(tiles[tiles.Length / 2]);
-        //FindPaths();
-        //设置场景左下角为初始SpawnPoint
-        //ToggleSpawnPoint(tiles[0]);
         Clear();
     }
     public void Clear()
@@ -89,8 +84,6 @@ public class GameBoard : MonoBehaviour
         {
             return false;
         }
-        //tiles[tiles.Length / 2].BecomeDestination();
-        //searchFrontier.Enqueue(tiles[tiles.Length / 2]);
         while (searchFrontier.Count > 0)//为所有tiles的distance赋值1，并且nextOnPath赋值为自身
         {
             GameTile tile = searchFrontier.Dequeue();//初始为tiles[tiles.Length / 2]

@@ -27,17 +27,6 @@ public class Enemy : GameBehavior
     public bool IsValidTarget => animator.CurrentClip == EnemyAnimator.Clip.Move;
     float Health { get; set; }
     public float Scale { get; private set; }
-    //private void Awake()
-    //{
-    //    if (!model.GetChild(0).GetComponent<Animator>())
-    //    {
-    //        animator.Configure(model.GetChild(0).gameObject.AddComponent<Animator>(), animationConfig);
-    //    }
-    //    else
-    //    {
-    //        animator.Configure(model.GetChild(0).GetComponent<Animator>(), animationConfig);
-    //    }
-    //}
     private void OnEnable()
     {
         game = FindObjectOfType<Game>();
@@ -74,13 +63,9 @@ public class Enemy : GameBehavior
         }
     }
     public void SpawnOn(GameTile tile) {
-        //transform.localPosition = tile.transform.localPosition;
         Debug.Assert(tile.NextTileOnPath!=null,"Nowhere to go!",this);
         tileFrom = tile;
         tileTo = tile.NextTileOnPath;
-        //postionFrom = tileFrom.transform.localPosition;
-        //positonTo = tileFrom.ExitPoint;
-        //transform.localRotation = tileFrom.PathDirection.GetRotation();
         progress = 0f;
         PrepareIntro();
     }
@@ -120,28 +105,18 @@ public class Enemy : GameBehavior
         }
         if (Health <= 0f)
         {
-            //OriginFactory.Reclaim(this);
-            //Recycle();
             animator.PlayDying();
             targetPointCollider.enabled = false;
             return true;
         }
         progress += Time.deltaTime*progressFactor;
         while (progress >= 1f) {
-            //tileFrom = tileTo;
-            //tileTo = tileTo.NextTileOnPath;
             if (tileTo == null) {
-                //OriginFactory.Reclaim(this);
                 Game.EnemyReachedDestination();
-                //Recycle();
                 animator.PlayOutro();
                 targetPointCollider.enabled = false;
                 return true;
             }
-            //postionFrom = positonTo;
-            //positonTo = tileFrom.ExitPoint;
-            //transform.localRotation = tileFrom.PathDirection.GetRotation();
-            //progress -= 1f;
             progress = (progress - 1f) / progressFactor;
             PrepareNextState();
             progress *= progressFactor;
@@ -149,7 +124,6 @@ public class Enemy : GameBehavior
         if (directionChange == DirectionChange.None) {
             transform.localPosition = Vector3.LerpUnclamped(postionFrom, positonTo, progress);
         }
-        //if (directionChange != DirectionChange.None)
         else{
             float angle = Mathf.LerpUnclamped(
                 directionAngleFrom, directionAngleTo, progress

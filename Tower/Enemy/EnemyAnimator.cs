@@ -51,10 +51,6 @@ public struct EnemyAnimator
         var output = AnimationPlayableOutput.Create(graph,"Enemy",animator);
         output.SetSourcePlayable(mixer);
     }
-    //public void Play(float speed) {
-    //    graph.GetOutput(0).GetSourcePlayable().SetSpeed(speed);
-    //    graph.Play();
-    //}
     public void PlayIntro() {
         SetWeight(Clip.Intro, 1f);
         CurrentClip = Clip.Intro;
@@ -69,23 +65,13 @@ public struct EnemyAnimator
         mixer.SetInputWeight((int)clip, weight);
     }
     public void PlayMove(float speed) {
-        //SetWeight(CurrentClip, 0f);
-        //SetWeight(Clip.Move, 1f);
         GetPlayable(Clip.Move).SetSpeed(speed);
-        //var clip = GetPlayable(Clip.Move);
-        //clip.SetSpeed(speed);
-        //clip.Play();
-        //CurrentClip = Clip.Move;
         BeginTransition(Clip.Move);
         if (hasAppearClip) {
             SetWeight(Clip.Appear, 0f);
         }
     }
     public void PlayOutro() {
-        //SetWeight(CurrentClip, 0f);
-        //SetWeight(Clip.Outro, 1f);
-        //GetPlayable(Clip.Outro).Play();
-        //CurrentClip = Clip.Outro;
         BeginTransition(Clip.Outro);
         if (hasDisappearClip) {
             PlayDisappearFor(Clip.Outro);
@@ -124,7 +110,6 @@ public struct EnemyAnimator
                 transitionProgress = -1f;
                 SetWeight(CurrentClip, 1f);
                 SetWeight(previousClip, 0f);
-                //GetPlayable(previousClip).Pause();
             }
             else
             {

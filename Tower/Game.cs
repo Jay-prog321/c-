@@ -11,12 +11,6 @@ public class Game : MonoBehaviour
 	public GameBoard board = default;
 	[SerializeField]
 	GameTileContentFactory tileContentFactory = default;
-	//[SerializeField]
-	//EnemyFactory enemyFactory = default;
-	//[Tooltip("产生敌人的速度")]
-	//[SerializeField, Range(0.1f, 10f)]
-	//float spawnSpeed = 1f;
-	//float spawnProgress;
 	[SerializeField]
 	GameScenario scenario = default;
 	GameScenario.State activeScenario;
@@ -37,7 +31,6 @@ public class Game : MonoBehaviour
 	void Awake()
 	{
 		towerUI = FindObjectOfType<TowerUI>();
-		//Time.timeScale = pauseTimeScale;
 		playerHealth = statingPlayerHealth;
 		board.Initialize(boardSize, tileContentFactory);
 		board.ShowGrid = true;
@@ -100,15 +93,9 @@ public class Game : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2)) {
 			selectedTowerType = TowerType.Mortar;
 		}
-        //spawnProgress += spawnSpeed * Time.deltaTime;
-        //while (spawnProgress >= 1f) {
-        //	spawnProgress -= 1f;
-        //	SpawnEnemy();
-        //}
         if (playerHealth <= 0 && statingPlayerHealth > 0&& IsGameStart) {
 			Debug.Log("defeat!");
 			Time.timeScale = pauseTimeScale;
-			//BeginNewGame();
 			towerUI.Defeated.Play();
 			towerUI.Defeated.SetHook("stop", ()=>towerUI.Defeated.SetPaused(true));;
 			IsGameStart = false;
@@ -117,7 +104,6 @@ public class Game : MonoBehaviour
 			Debug.Log("Victory!");
 			towerUI.Victory.Play();
 			towerUI.Victory.SetHook("stop", () => towerUI.Victory.SetPaused(true)); ;
-			//towerUI.Victory.Play();
 			activeScenario.Progress();
 			IsGameStart = false;
 		}
@@ -161,7 +147,6 @@ public class Game : MonoBehaviour
 				{
 					board.ToggleWall(tile);
 				}
-				//tile.Content =tileContentFactory.Get( GameTileContentType.Destination);
 			}
 		}		
 	}

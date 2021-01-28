@@ -57,7 +57,6 @@ public class GameTile : MonoBehaviour
 		neighbor.ExitPoint = neighbor.transform.localPosition + direction.GetHalfVector();//保证enemy在边缘移动
 		neighbor.PathDirection = direction;
 		return
-		//neighbor.Content.Type != GameTileContentType.wall ? neighbor : null;
 		neighbor.Content.BlocksPath ? null : neighbor;
 	}
 	public GameTile GrowPathNorth() => GrowPathTo(north,Direction.South);
