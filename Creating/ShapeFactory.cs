@@ -12,6 +12,21 @@ public class ShapeFactory :ScriptableObject
     bool recycle;
     Scene poolScence;
     List<CreatingShape>[] pools;
+    [System.NonSerialized]
+    int factoryId = int.MinValue;
+    public int FactoryId { get {
+            return factoryId;
+        }
+        set {
+            if (factoryId == int.MinValue && value != int.MaxValue)
+            {
+                factoryId = value;
+            }
+            else {
+                Debug.Log("Not allowed to change factoryId");
+            }
+        }
+    }
     public CreatingShape Get(int shapeID,int materialID=0) {
         CreatingShape instance;
         if (recycle)
@@ -30,6 +45,7 @@ public class ShapeFactory :ScriptableObject
             }
             else {
                 instance = Instantiate(prefabs[shapeID]);
+                instance.OriginalFactory = this;
                 instance.ShapeID = shapeID;
                 SceneManager.MoveGameObjectToScene(instance.gameObject,poolScence);
             }
@@ -70,6 +86,10 @@ public class ShapeFactory :ScriptableObject
         poolScence = SceneManager.CreateScene(name);
     }
     public void Reclaim(CreatingShape shapeToRecycle) {
+        if (shapeToRecycle.OriginalFactory != this) {
+            Debug.LogError("Tried to reclaim shape with wrong factory");
+            return;
+        }
         if (recycle)
         {
             if (pools == null)

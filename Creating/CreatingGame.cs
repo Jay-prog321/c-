@@ -17,8 +17,6 @@ public class CreatingGame : PersistableObject
     KeyCode loadKey = KeyCode.L;
     [SerializeField]
     KeyCode destroyKey = KeyCode.X;
-    [SerializeField]
-    ShapeFactory shapeFactory;
     List<CreatingShape> creatingShapes;
     [SerializeField]
     PersistentStorage storage;
@@ -30,6 +28,8 @@ public class CreatingGame : PersistableObject
     Slider creationSpeedSlider;
     [SerializeField]
     Slider destructionSpeedSlider;
+    [SerializeField]
+    ShapeFactory[] shapeFactories;
     #endregion
     #region public
     public float CreationSpeed { get; set; }
@@ -37,10 +37,20 @@ public class CreatingGame : PersistableObject
     //public SpawnZone spawnZoneOfLevel { get; set; }
     //public static CreatingGame Instance { get; private set; }
     #endregion
-    const int saveVersion = 4;
+    const int saveVersion = 5;
     float creationProgress, destructionProgress;
     int loadedLevelBuildIndex;
     Random.State mainRandomState;
+    private void OnEnable()
+    {
+        if (shapeFactories[0].FactoryId != 0)
+        {
+            for (int i = 0; i < shapeFactories.Length; i++)
+            {
+                shapeFactories[i].FactoryId = i;
+            }
+        }
+    }
     private void Start()
     {
         mainRandomState = Random.state;
@@ -120,48 +130,33 @@ public class CreatingGame : PersistableObject
         if (creatingShapes.Count > 0) {
             int index = Random.Range(0, creatingShapes.Count);
             //Destroy(creatingShapes[index].gameObject);
-            shapeFactory.Reclaim(creatingShapes[index]);
+            //shapeFactory.Reclaim(creatingShapes[index]);
+            creatingShapes[index].Recycle();
             int lastIndex = creatingShapes.Count - 1;
             creatingShapes[index] = creatingShapes[lastIndex];
             creatingShapes.RemoveAt(lastIndex);
         }
     }
     void CreateShape() {
-        //CreatingShape o = Instantiate(prefab);
-        CreatingShape instace = shapeFactory.GetRandom();
-        //Transform t = instace.transform;
-        //t.localPosition = GameLevel.Current.SpawnPoint;
-        //t.localRotation = Random.rotation;
-        //t.localScale = Vector3.one * Random.Range(0.1f, 1f);
-        //instace.SetColor(Random.ColorHSV(
-        //    hueMin: 0f, hueMax: 1f,
-        //    saturationMin: 0.5f, saturationMax: 1f,
-        //    valueMin: 0.25f, valueMax: 1f,
-        //    alphaMin: 1f, alphaMax: 1f
-        //    ));
-        //instace.AngularVelocity = Random.onUnitSphere * Random.Range(0f,90f); ;
-        //instace.Velocity = Random.onUnitSphere * Random.Range(0f,2f);
-        GameLevel.Current.ConfigureSpawn(instace);
-        creatingShapes.Add(instace);
+        //CreatingShape instace = shapeFactory.GetRandom();
+        //GameLevel.Current.ConfigureSpawn(instace);
+        creatingShapes.Add(GameLevel.Current.SpawnShape());
     }
     void BeginNewGame() {
         Random.state = mainRandomState;
         int seed = Random.Range(0,int.MaxValue)^(int)Time.unscaledTime;
         mainRandomState = Random.state; 
         Random.InitState(seed);
-        //CreationSpeed = 0;
         creationSpeedSlider.value=CreationSpeed = 0;
-        //DestructionSpeed = 0;
         destructionSpeedSlider.value =DestructionSpeed= 0;
         for (int i = 0; i < creatingShapes.Count; i++)
         {
-            //Destroy(creatingShapes[i].gameObject);
-            shapeFactory.Reclaim(creatingShapes[i]);
+            //shapeFactory.Reclaim(creatingShapes[i]);
+            creatingShapes[i].Recycle();
         }
         creatingShapes.Clear();
     }
     public override void Save(GameDataWriter writer) {
-        //writer.Write(-saveVersion);
         writer.Write(creatingShapes.Count);
         writer.Write(Random.state);
         writer.Write(CreationSpeed);
@@ -172,6 +167,7 @@ public class CreatingGame : PersistableObject
         GameLevel.Current.Save(writer);
         for (int i = 0; i < creatingShapes.Count; i++)
         {
+            writer.Write(creatingShapes[i].OriginalFactory.FactoryId);
             writer.Write(creatingShapes[i].ShapeID);
             writer.Write(creatingShapes[i].MaterialID);
             creatingShapes[i].Save(writer);
@@ -192,7 +188,6 @@ public class CreatingGame : PersistableObject
         int version = reader.Version;
         int count = version <= 0 ? -version : reader.ReadInt();
         if (version >= 3) {
-            //Random.state = reader.ReadRandomState();
             Random.State state = reader.ReadRandomState();
             if (!reseedOnLoad) {
                 Random.state = state;
@@ -202,16 +197,16 @@ public class CreatingGame : PersistableObject
             destructionSpeedSlider.value= DestructionSpeed = reader.ReadFloat();
             destructionProgress = reader.ReadFloat();
         }
-        //StartCoroutine(LoadLevel(version < 2 ? 1 : reader.ReadInt())); ;
         yield return LoadLevel(version<2?1:reader.ReadInt());
         if (version >= 3) {
             GameLevel.Current.Load(reader);
         }
         for (int i = 0; i < count; i++)
         {
+            int factoryId = version >= 5 ? reader.ReadInt() : 0;
             int shapedID = version > 0 ? reader.ReadInt() : 0;
             int materialID = version > 0 ? reader.ReadInt() : 0;
-            CreatingShape instace = shapeFactory.Get(shapedID, materialID);
+            CreatingShape instace = shapeFactories[factoryId].Get(shapedID, materialID);
             instace.Load(reader);
             creatingShapes.Add(instace);
         }
