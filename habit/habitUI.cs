@@ -15,10 +15,18 @@ public class habitUI : MonoBehaviour
     void Start()
     {
         input.onEndEdit.AddListener(End_Value);
-        confirm.onClick.AddListener(()=>Input.GetKeyDown(KeyCode.KeypadEnter));
+        confirm.onClick.AddListener(() => { 
+        Input.GetKeyDown(KeyCode.KeypadEnter);
+        InputAreaClear();}
+        );
     }
     public void End_Value(string input)
     {
         inputComment = input;
+    }
+    void InputAreaClear()
+    {
+        input.Select();
+        input.text = "";
     }
 }
